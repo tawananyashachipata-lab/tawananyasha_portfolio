@@ -25,7 +25,6 @@ npm run dev
 - Built with React, TypeScript, and Tailwind CSS
 - Designed to feel personal, polished, and professional for recruiters and collaborators
 - No generated branding or starter messaging remains in the live experience
-<<<<<<< HEAD
 
 
 ## Contact form: Formspree setup
@@ -39,5 +38,3 @@ The contact form sends messages inside the portfolio using Formspree's JSON endp
 5. Submit a test message from the deployed website and confirm delivery in Formspree and your inbox.
 
 Until the form ID is configured, visitors see a setup error instead of a false success. The email link remains available as a fallback. The form ID is a public identifier, not a private API key.
-=======
->>>>>>> 7788d290869e58ac99cbb6963c477bd62f9436bf

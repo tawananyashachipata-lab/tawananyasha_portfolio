@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-=======
-import { useCallback, useEffect, useMemo, useState } from "react";
->>>>>>> 7788d290869e58ac99cbb6963c477bd62f9436bf
 import { achievements, LEVEL_XP, VISIT_XP, type LocationId } from "@/data/portfolio";
 import { sounds } from "@/lib/sounds";
 
@@ -11,21 +7,15 @@ const SAVE_KEY = "tawa-pixel-portfolio-save-v1";
 type Save = {
   xp: number;
   visited: LocationId[];
-<<<<<<< HEAD
   earnedVisits: LocationId[];
   unlocked: string[];
   soundOn: boolean;
   spentXp: number;
   rewards: string[];
-=======
-  unlocked: string[];
-  soundOn: boolean;
->>>>>>> 7788d290869e58ac99cbb6963c477bd62f9436bf
 };
 
 function loadSave(): Save {
   // Sound is OFF by default; the visitor opts in via the HUD toggle.
-<<<<<<< HEAD
   const fallback: Save = {
     xp: 0,
     visited: [],
@@ -35,9 +25,6 @@ function loadSave(): Save {
     spentXp: 0,
     rewards: [],
   };
-=======
-  const fallback: Save = { xp: 0, visited: [], unlocked: [], soundOn: false };
->>>>>>> 7788d290869e58ac99cbb6963c477bd62f9436bf
   if (typeof window === "undefined") return fallback;
   try {
     const raw = window.localStorage.getItem(SAVE_KEY);
@@ -46,7 +33,6 @@ function loadSave(): Save {
     return {
       xp: typeof parsed.xp === "number" ? parsed.xp : 0,
       visited: Array.isArray(parsed.visited) ? (parsed.visited as LocationId[]) : [],
-<<<<<<< HEAD
       earnedVisits: Array.isArray(parsed.earnedVisits)
         ? (parsed.earnedVisits as LocationId[])
         : Array.isArray(parsed.visited)
@@ -56,10 +42,6 @@ function loadSave(): Save {
       soundOn: parsed.soundOn === true,
       spentXp: typeof parsed.spentXp === "number" ? Math.max(0, parsed.spentXp) : 0,
       rewards: Array.isArray(parsed.rewards) ? parsed.rewards : [],
-=======
-      unlocked: Array.isArray(parsed.unlocked) ? parsed.unlocked : [],
-      soundOn: parsed.soundOn === true,
->>>>>>> 7788d290869e58ac99cbb6963c477bd62f9436bf
     };
   } catch {
     return fallback;
@@ -70,10 +52,7 @@ export type Toast = { id: number; title: string; body: string };
 
 export function useGameProgress() {
   const [save, setSave] = useState<Save>(loadSave);
-<<<<<<< HEAD
   const unlockedRewards = useRef(new Set(save.rewards));
-=======
->>>>>>> 7788d290869e58ac99cbb6963c477bd62f9436bf
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   useEffect(() => {
@@ -110,7 +89,6 @@ export function useGameProgress() {
 
   const visit = useCallback(
     (loc: LocationId) => {
-<<<<<<< HEAD
       const nextVisited = save.visited.includes(loc) ? save.visited : [...save.visited, loc];
 
       setSave((s) => {
@@ -123,14 +101,6 @@ export function useGameProgress() {
           visited: isNewlyVisited ? [...s.visited, loc] : s.visited,
           earnedVisits: isNewVisit ? [...s.earnedVisits, loc] : s.earnedVisits,
         };
-=======
-      const isNew = !save.visited.includes(loc);
-      const nextVisited = isNew ? [...save.visited, loc] : save.visited;
-
-      setSave((s) => {
-        if (s.visited.includes(loc)) return s;
-        return { ...s, xp: s.xp + VISIT_XP, visited: [...s.visited, loc] };
->>>>>>> 7788d290869e58ac99cbb6963c477bd62f9436bf
       });
 
       const locAch: Record<LocationId, string> = {
@@ -163,7 +133,6 @@ export function useGameProgress() {
   const markMoved = useCallback(() => unlock("first-steps"), [unlock]);
   const markResume = useCallback(() => unlock("resume-hunter"), [unlock]);
 
-<<<<<<< HEAD
   const redeem = useCallback(
     (id: string, cost: number) => {
       if (!Number.isInteger(cost) || cost <= 0) return false;
@@ -177,23 +146,16 @@ export function useGameProgress() {
     [save.xp, save.spentXp, pushToast],
   );
 
-=======
->>>>>>> 7788d290869e58ac99cbb6963c477bd62f9436bf
   const toggleSound = useCallback(() => {
     setSave((s) => ({ ...s, soundOn: !s.soundOn }));
   }, []);
 
   const resetProgress = useCallback(() => {
-<<<<<<< HEAD
     setSave((s) => ({ ...s, visited: [] }));
     pushToast(
       "Exploration reset",
       "Visited zones cleared. Earned XP, games and achievements were kept.",
     );
-=======
-    setSave((s) => ({ xp: 0, visited: [], unlocked: [], soundOn: s.soundOn }));
-    pushToast("Exploration reset", "XP, visited zones and achievements cleared.");
->>>>>>> 7788d290869e58ac99cbb6963c477bd62f9436bf
   }, [pushToast]);
 
   const level = Math.floor(save.xp / LEVEL_XP) + 1;
@@ -202,12 +164,9 @@ export function useGameProgress() {
   return useMemo(
     () => ({
       xp: save.xp,
-<<<<<<< HEAD
       availableXp: Math.max(0, save.xp - save.spentXp),
       rewards: save.rewards,
       redeem,
-=======
->>>>>>> 7788d290869e58ac99cbb6963c477bd62f9436bf
       level,
       levelProgress,
       visited: save.visited,
@@ -227,10 +186,7 @@ export function useGameProgress() {
       levelProgress,
       toasts,
       visit,
-<<<<<<< HEAD
       redeem,
-=======
->>>>>>> 7788d290869e58ac99cbb6963c477bd62f9436bf
       unlock,
       markMoved,
       markResume,
